@@ -25,7 +25,7 @@ app.delete('/api/tasks/:id', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Servidor rodando');
+    res.send('Servidor funcionando');
   });
 
 const port = 3000;
