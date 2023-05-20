@@ -35,7 +35,7 @@ app.get('/api/tasks', (req, res) => {
     res.json(tasks);
   });
 
-const port = 19000;
+const port = 5000;
 app.listen(port, () => {
   console.log(`Server está funcionando na porta ${port}`);
 });
