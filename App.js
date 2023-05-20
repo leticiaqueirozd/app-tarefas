@@ -1,20 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Button, Text, FlatList } from 'react-native';
 
-export default function App() {
+const App = () => {
+  const [task, setTask] = useState('');
+  const [taskList, setTaskList] = useState([]);
+
+  const addTask = () => {
+    if (task.trim() !== '') {
+      setTaskList([...taskList, task]);
+      setTask('');
+    }
+  };
+
+  const removeTask = (index) => {
+    const updatedList = [...taskList];
+    updatedList.splice(index, 1);
+    setTaskList(updatedList);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, padding: 20 }}>
+      <TextInput
+        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 }}
+        onChangeText={(text) => setTask(text)}
+        value={task}
+        placeholder="Digite uma tarefa"
+      />
+      <Button title="Adicionar" onPress={addTask} />
+      <FlatList
+        data={taskList}
+        renderItem={({ item, index }) => (
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+            <Text style={{ flex: 1 }}>{item}</Text>
+            <Button title="Remover" onPress={() => removeTask(index)} />
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
