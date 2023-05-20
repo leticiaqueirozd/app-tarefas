@@ -20,15 +20,15 @@ app.delete('/api/tasks/:id', (req, res) => {
     const deletedTask = tasks.splice(index, 1);
     res.json(deletedTask[0]);
   } else {
-    res.status(404).json({ error: 'Task not found' });
+    res.status(404).json({ error: 'Tarefa não encontrada' });
   }
 });
 
 app.get('/', (req, res) => {
-    res.send('Servidor funcionando');
-  });
+  res.send('Servidor funcionando');
+});
 
 const port = 3000;
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server está funcionando na porta ${port}`);
 });

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, FlatList } from 'react-native';
 import axios from 'axios';
 
-const API_URL = 'http://example.com/api/tasks';
+const API_URL = 'http://localhost:3000/api/tasks';
 
 const App = () => {
   const [task, setTask] = useState('');
