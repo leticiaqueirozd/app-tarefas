@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, FlatList } from 'react-native';
+import axios from 'axios';
+
+const API_URL = 'http://example.com/api/tasks';
 
 const App = () => {
   const [task, setTask] = useState('');
@@ -7,15 +10,29 @@ const App = () => {
 
   const addTask = () => {
     if (task.trim() !== '') {
-      setTaskList([...taskList, task]);
-      setTask('');
+      axios
+        .post(API_URL, { task })
+        .then((response) => {
+          setTaskList([...taskList, response.data]);
+          setTask('');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
-  const removeTask = (index) => {
-    const updatedList = [...taskList];
-    updatedList.splice(index, 1);
-    setTaskList(updatedList);
+  const removeTask = (index, taskId) => {
+    axios
+      .delete(`${API_URL}/${taskId}`)
+      .then(() => {
+        const updatedList = [...taskList];
+        updatedList.splice(index, 1);
+        setTaskList(updatedList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -31,8 +48,8 @@ const App = () => {
         data={taskList}
         renderItem={({ item, index }) => (
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-            <Text style={{ flex: 1 }}>{item}</Text>
-            <Button title="Remover" onPress={() => removeTask(index)} />
+            <Text style={{ flex: 1 }}>{item.task}</Text>
+            <Button title="Remover" onPress={() => removeTask(index, item.id)} />
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
