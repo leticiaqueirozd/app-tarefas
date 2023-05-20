@@ -24,9 +24,9 @@ app.delete('/api/tasks/:id', (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-  res.send('Servidor funcionando');
-});
+app.get('/api/tasks', (req, res) => {
+    res.json(tasks);
+  });
 
 const port = 3000;
 app.listen(port, () => {
